@@ -6,4 +6,5 @@ node_js:
   - "0.10"
   - "iojs"
 before_install: npm install -g node-gyp
+install: echo No install
 script: make ci
