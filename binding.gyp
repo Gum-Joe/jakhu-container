@@ -1,8 +1,8 @@
 {
   "targets": [
     {
-      "target_name": "addon",
-      "sources": [ "src/start.cc" ]
+      "target_name": "start",
+      "sources": [ "src/exec.h", "src/start.cc"  ]
     }
   ]
 }
