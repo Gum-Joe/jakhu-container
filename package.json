@@ -1,0 +1,26 @@
+{
+  "name": "web-os-container",
+  "version": "1.0.0",
+  "description": "A 'container' for running Web-app that reports and logs infomation back to Web-OS and starts the Web-app on the local machine or docker",
+  "main": "contain.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gum-Joe/Web-OS-container.git"
+  },
+  "keywords": [
+    "web",
+    "os",
+    "contaier",
+    "cplus",
+    "nodejs"
+  ],
+  "author": "Gum-Joe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Gum-Joe/Web-OS-container/issues"
+  },
+  "homepage": "https://github.com/Gum-Joe/Web-OS-container#readme"
+}
