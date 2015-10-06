@@ -1,8 +1,8 @@
 // Headers for downloading
 #include <stdio.h>
 
-int exec() {
-    FILE * f = _popen( "ls", "r" );
+int exec(const char * cmd, const char * options) {
+    FILE * f = _popen(cmd, options);
     if ( f == 0 ) {
         fprintf( stderr, "Could not execute\n" );
         return 1;
@@ -13,4 +13,5 @@ int exec() {
         fprintf( stdout, "%s", buf  );
     }
     _pclose( f );
+    return 0;
 }

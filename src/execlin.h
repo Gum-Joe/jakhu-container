@@ -1,8 +1,8 @@
-// Headers for linux exec
+// Headers for downloading
 #include <stdio.h>
 
-int exec() {
-    FILE * f = popen( "ls", "r" );
+int exec(const char * cmd, const char * options) {
+    FILE * f = popen(cmd, options);
     if ( f == 0 ) {
         fprintf( stderr, "Could not execute\n" );
         return 1;
@@ -13,4 +13,5 @@ int exec() {
         fprintf( stdout, "%s", buf  );
     }
     pclose( f );
+    return 0;
 }
