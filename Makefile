@@ -1,6 +1,4 @@
 ci:
-	diff -u src/exec.h src/execlin.h > exec.patch; \
-	patch src/exec.h < exec.patch; \
+	scripts/prepare.js; \
 	node-gyp configure; \
 	node-gyp rebuild; \
-	@echo Done!;
