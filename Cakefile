@@ -12,7 +12,7 @@ install = (callback) ->
   )
 
 test = (callback) ->
-  exec.exec('coffee -o test -c test/src', (stdout, stderr, error) ->
+  exec.exec('coffee -o test -c src/test', (stdout, stderr, error) ->
     if stdout != null
       console.log stdout
     else if stderr
@@ -25,3 +25,4 @@ task 'install', 'Build lib/ from src/', ->
 
 task 'test', 'Build test/ from test/src', ->
   install()
+  test()

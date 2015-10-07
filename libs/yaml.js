@@ -6,8 +6,10 @@
 
   fs = require('fs');
 
-  module.exports = getdata(ins)(function() {
-    return YAML.parse(fs.readFileSync('../../instances/' + ins + '.web.yml', 'utf8'));
-  });
+  module.exports = {
+    getdata: function(ins) {
+      return YAML.parse(fs.readFileSync('./instances/' + ins + '/.web.yml', 'utf8'));
+    }
+  };
 
 }).call(this);
