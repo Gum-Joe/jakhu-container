@@ -2,7 +2,7 @@
   "name": "web-os-container",
   "version": "1.0.0",
   "description": "A 'container' for running Web-app that reports and logs infomation back to Web-OS and starts the Web-app on the local machine or docker",
-  "main": "contain.js",
+  "main": "app.js",
   "scripts": {
     "install": "cake install"
   },
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/Gum-Joe/Web-OS-container#readme",
   "dependencies": {
+    "coffee-script": "^1.10.0",
     "yamljs": "^0.2.4"
   }
 }
