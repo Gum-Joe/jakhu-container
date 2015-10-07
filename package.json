@@ -4,8 +4,7 @@
   "description": "A 'container' for running Web-app that reports and logs infomation back to Web-OS and starts the Web-app on the local machine or docker",
   "main": "contain.js",
   "scripts": {
-    "preinstall": "node scripts/prepare.js && node-gyp configure",
-    "install": "node-gyp rebuild"
+    "install": "cake install"
   },
   "repository": {
     "type": "git",
