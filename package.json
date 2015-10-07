@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/Gum-Joe/Web-OS-container/issues"
   },
-  "homepage": "https://github.com/Gum-Joe/Web-OS-container#readme"
+  "homepage": "https://github.com/Gum-Joe/Web-OS-container#readme",
+  "dependencies": {
+    "yamljs": "^0.2.4"
+  }
 }
