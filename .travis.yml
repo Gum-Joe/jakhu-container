@@ -15,4 +15,4 @@ before_install: npm install -g coffee-script mocha istanbul
 install: npm install
 script: make ci
 after_script:
-  - codeclimate-test-reporter < lcov.info
+  - codeclimate-test-reporter < coverage/lcov.info
