@@ -31,3 +31,5 @@ libs
 instances
 ./test/*
 *.js
+
+instances
