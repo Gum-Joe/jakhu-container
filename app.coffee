@@ -5,7 +5,7 @@ path = require 'path'
 get = require './libs/get.js'
 checks = require './libs/checks.js'
 parse = require './libs/parse.js'
-exec = require 'child_process'
+{spawn} = require 'child_process'
 # Read instances
 
 start = (args, dir) ->
@@ -21,19 +21,19 @@ start = (args, dir) ->
     console.log 'Ruby version '+ parsed.ruby+' is required. \nPlease consider using Docker'
   if parsed.python != undefined && process.env.WEB_DOCKER != true
     console.log 'Python version '+ parsed.python+' is required. \nPlease consider using Docker'
-  log = exec.spawn(parsed.start)
-  log.stdout.on('data', (data) ->
-    return 'h'
-    console.log data
-  )
+  ls = spawn('ls', ['./'])
 
-  log.stderr.on('data', (data) ->
-    return 'h'
-    console.log data
-    # body...
-  )
+  ls.stdout.on('data', (data) ->
+    console.log('stdout: ' + data)
+  );
 
-  log.on
+  ls.stderr.on('data', (data) ->
+    console.log('stderr: ' + data)
+  );
+
+  ls.on('close', (code) ->
+    console.log('child process exited with code ' + code)
+    );
   return 'Done'
   # start
 
