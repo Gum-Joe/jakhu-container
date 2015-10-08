@@ -5,6 +5,7 @@ path = require 'path'
 get = require './libs/get.js'
 checks = require './libs/checks.js'
 parse = require './libs/parse.js'
+exec = require 'child_process'
 # Read instances
 
 start = (args, dir) ->
@@ -20,5 +21,20 @@ start = (args, dir) ->
     console.log 'Ruby version '+ parsed.ruby+' is required. \nPlease consider using Docker'
   if parsed.python != undefined && process.env.WEB_DOCKER != true
     console.log 'Python version '+ parsed.python+' is required. \nPlease consider using Docker'
+  log = exec.spawn(parsed.start)
+  log.stdout.on('data', (data) ->
+    return 'h'
+    console.log data
+  )
+
+  log.stderr.on('data', (data) ->
+    return 'h'
+    console.log data
+    # body...
+  )
+
+  log.on
+  return 'Done'
+  # start
 
 start('test', 'instances')
