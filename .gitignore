@@ -29,7 +29,5 @@ node_modules
 #Compiled code
 libs
 instances
-./test/*
+./test
 *.js
-
-instances

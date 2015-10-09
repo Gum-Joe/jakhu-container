@@ -1,0 +1,19 @@
+# An exmaple java instances config
+language: java
+java:
+  - latest
+
+name: java
+
+start: java target/app.jar
+# Install - npm install for nodejs
+
+build:
+  # Build modules such as C++, C# or Coffee-script .etc? or setup.py
+  # setup.py here
+  # mvn install here
+  true: true
+  #OS to run on - Ubuntu or CentOS
+  os: Ubuntu
+  # Command to run
+  run: mvn install

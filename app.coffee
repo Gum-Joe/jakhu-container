@@ -15,11 +15,11 @@ start = (args, dir) ->
   parsed = parse.parse(dir+'/'+args+'/.web.yml')
   console.log 'Starting Web-app '+parsed.name
   console.log 'Language: '+parsed.language
-  if parsed.nodejs != undefined && process.env.WEB_DOCKER != true
+  if parsed.nodejs != undefined && process.env.WEB_DOCKER == false
     console.log 'Nodejs version '+ parsed.nodejs+' is required. \nPlease consider using Docker'
-  if parsed.ruby != undefined && process.env.WEB_DOCKER != true
+  if parsed.ruby != undefined && process.env.WEB_DOCKER == false
     console.log 'Ruby version '+ parsed.ruby+' is required. \nPlease consider using Docker'
-  if parsed.python != undefined && process.env.WEB_DOCKER != true
+  if parsed.python != undefined && process.env.WEB_DOCKER == false
     console.log 'Python version '+ parsed.python+' is required. \nPlease consider using Docker'
   ls = spawn('ls', ['./'])
 

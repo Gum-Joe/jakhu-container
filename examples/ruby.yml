@@ -1,0 +1,20 @@
+# An exmaple ruby instances config
+language: ruby
+ruby:
+  - latest
+
+name: ruby
+
+start: bin/rails server
+# Install - npm install for nodejs
+install:
+  - gem install bundle
+  - bundle install
+
+build:
+  # Build modules such as C++, C# or Coffee-script .etc?
+  true: true
+  #OS to run on - Ubuntu or CentOS
+  os: Ubuntu
+  # Command to run
+  run: make build

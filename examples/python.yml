@@ -1,0 +1,21 @@
+# An exmaple ruby instances config
+language: python
+python:
+  - 2.7
+
+name: python
+
+start: python start.py
+# Install - npm install for nodejs
+install:
+  # Need package manager clarification
+  - pip install
+
+build:
+  # Build modules such as C++, C# or Coffee-script .etc? or setup.py
+  # setup.py here
+  true: true
+  #OS to run on - Ubuntu or CentOS
+  os: Ubuntu
+  # Command to run
+  run: python setup.py
