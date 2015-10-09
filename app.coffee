@@ -10,7 +10,7 @@ parse = require './libs/parse.js'
 
 start = (args, dir) ->
   # Check instances
-  checks.instances(dir)
+  checks.instances(dir, true)
   # Parse YAML
   parsed = parse.parse(dir+'/'+args+'/.web.yml')
   console.log 'Starting Web-app '+parsed.name

@@ -17,6 +17,9 @@
     "cplus",
     "nodejs"
   ],
+  "bin": {
+    "contain": "bin/cli.js"
+  },
   "author": "Gum-Joe",
   "license": "MIT",
   "bugs": {

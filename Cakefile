@@ -17,6 +17,13 @@ install = (callback) ->
       # body...
       console.log "Error!\n"+stderr
   )
+  exec.exec('coffee -o ./bin -c src/bin', (stdout, stderr, error) ->
+    if stdout != null
+      console.log stdout
+    else if stderr
+      # body...
+      console.log "Error!\n"+stderr
+  )
 
 test = (callback) ->
   exec.exec('coffee -o test -c src/test', (stdout, stderr, error) ->
@@ -35,7 +42,7 @@ watchsrc = (callback) ->
       console.log "Error!\n"+stderr
   )
 
-task 'install', 'Build lib/ from src/', ->
+task 'install', 'Build lib/ from src/ and build bin/ from src/bin/', ->
   install()
 
 task 'test', 'Build test/ from test/src', ->
