@@ -4,7 +4,7 @@
   "description": "A 'container' for running Web-app that reports and logs infomation back to Web-OS and starts the Web-app on the local machine or docker",
   "main": "app.js",
   "scripts": {
-    "install": "cake install"
+    "preinstall": "cake install"
   },
   "repository": {
     "type": "git",
