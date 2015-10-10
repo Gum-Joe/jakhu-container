@@ -24,6 +24,9 @@ start = (args, dir) ->
   if parsed.nodejs == 'latest'
     console.log 'WARN: latest is not a nodejs version. For the latest version, use "stable" instead. We wil swap "latest" for "stable" this time'
 
+  if process.env.WEB_DOCKER != undefined
+    console.log 'Pulling Docker image'
+
   console.log '\nStarting Web-app '+parsed.name
   console.log 'Language: '+parsed.language
 
