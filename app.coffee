@@ -6,35 +6,31 @@ get = require './libs/get.js'
 checks = require './libs/checks.js'
 parse = require './libs/parse.js'
 {spawn} = require 'child_process'
+{script} = require './libs/gen.js'
 # Read instances
+'use strict';
 
 start = (args, dir) ->
   # Check instances
   checks.instances(dir, true)
   # Parse YAML
-  parsed = parse.parse(dir+'/'+args+'/.web.yml')
-  console.log 'Starting Web-app '+parsed.name
-  console.log 'Language: '+parsed.language
+  @parsed = parse.parse(dir+'/'+args+'/.web.yml')
   if parsed.nodejs != undefined && process.env.WEB_DOCKER == false
-    console.log 'Nodejs version '+ parsed.nodejs+' is required. \nPlease consider using Docker'
+    console.log 'WARN: Nodejs version '+ parsed.nodejs+' is required. \nPlease consider using Docker'
   if parsed.ruby != undefined && process.env.WEB_DOCKER == false
-    console.log 'Ruby version '+ parsed.ruby+' is required. \nPlease consider using Docker'
+    console.log 'WARN: Ruby version '+ parsed.ruby+' is required. \nPlease consider using Docker'
   if parsed.python != undefined && process.env.WEB_DOCKER == false
-    console.log 'Python version '+ parsed.python+' is required. \nPlease consider using Docker'
-  ls = spawn('ls', ['./'])
+    console.log 'WARN: Python version '+ parsed.python+' is required. \nPlease consider using Docker'
+  if parsed.nodejs == 'latest'
+    console.log 'WARN: latest is not a nodejs version. For the latest version, use "stable" instead. We wil swap "latest" for "stable" this time'
 
-  ls.stdout.on('data', (data) ->
-    console.log('stdout: ' + data)
-  );
+  console.log '\nStarting Web-app '+parsed.name
+  console.log 'Language: '+parsed.language
 
-  ls.stderr.on('data', (data) ->
-    console.log('stderr: ' + data)
-  );
-
-  ls.on('close', (code) ->
-    console.log('child process exited with code ' + code)
-    );
+  if process.env.WEB_DOCKER != false
+    script(parsed.language, parsed)
   return 'Done'
   # start
+
 
 start('test', 'instances')

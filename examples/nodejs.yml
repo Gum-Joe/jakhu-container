@@ -2,7 +2,7 @@
 # Language
 language: nodejs
 nodejs: 0.12
-required:
+require:
   - ruby
 name: test
 # Command to start
