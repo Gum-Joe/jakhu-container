@@ -1,4 +1,5 @@
 fs = require 'fs'
+mkdirp = require 'mkdirp'
 exports.script = (lang, parsed, options) ->
   # Main stuff
   @con = 'startcon.sh'
@@ -76,3 +77,7 @@ exports.script = (lang, parsed, options) ->
     console.log '\nStart script Generated'
   if lang =='ruby'
     console.log 'h'
+  # Create docker file in /tmp
+  mkdirp './tmp'
+  @docker = './tmp/Dockerfile'
+  fs.openSync @docker, 'w'
