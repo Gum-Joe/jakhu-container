@@ -9,7 +9,15 @@ exports.script = (lang, parsed, options) ->
   fs.chmodSync @con, '700'
   fs.chmodSync @con, '777'
   # Write shebang
-  fs.writeFileSync(@con, @sharray, 'utf8');
+  fs.writeFileSync @con, @sharray, 'utf8'
+  # env
+  if parsed.env != undefined
+    fs.appendFileSync @con, 'echo Setting enviroment varibles from .web.yml...\n'
+    v = 0
+    while v < parsed.env.length
+      fs.appendFileSync @con, 'export '+parsed.env[v]+'\n'
+      v++
+
   # Update Nodejs/ruby/python
   if lang == 'nodejs'
     if parsed.nodejs == 'latest'
