@@ -27,10 +27,9 @@ exports.script = (lang, parsed, options) ->
           fs.appendFileSync @con, @ruby
         i++
     # Global deps
-    @cd = 'cd ./app'
+    @cd = '\ncd ./app\n'
     @global = parsed.global
     @enter = '\n'
-    fs.appendFileSync @con, @cd
     if parsed.global != undefined
       if global.npm != undefined
         # body...
@@ -51,6 +50,21 @@ exports.script = (lang, parsed, options) ->
             # body...
             fs.appendFileSync @con, global.gem[g]+' '
           g++
+      # if parsed.global
+    fs.appendFileSync @con, @cd
+    if parsed.build != undefined
+      # body...
+      @build = parsed.build
+      fs.appendFileSync @con, 'echo Building Web-app...\n'
+      b = 0
+      while b < build.script.length
+        fs.appendFileSync @con, build.script[b]+@enter
+        b++
+    # if
+    fs.appendFileSync @con, 'echo Starting Web-app...\n'
+    if parsed.port != undefined
+      fs.appendFileSync @con, 'export PORT='+parsed.port+@enter
+    fs.appendFileSync @con, parsed.start
     console.log '\nStart script Generated'
   if lang =='ruby'
     console.log 'h'
