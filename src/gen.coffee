@@ -4,6 +4,7 @@ exports.script = (lang, parsed, options) ->
   # Main stuff
   @con = 'startcon.sh'
   @sharray = '#!/usr/bin/bash\necho Preparing to run web-app...\n'
+  @id = Math.floor Math.random() * 9999999999999999 + 1
   # Open script
   fs.openSync @con, 'w'
   # Chmod
@@ -18,6 +19,7 @@ exports.script = (lang, parsed, options) ->
     while v < parsed.env.length
       fs.appendFileSync @con, 'export '+parsed.env[v]+'\n'
       v++
+    fs.appendFileSync @con, 'export CONTAINER_ID='+@id+'\n'
 
   # Update Nodejs/ruby/python
   if lang == 'nodejs'
@@ -78,6 +80,7 @@ exports.script = (lang, parsed, options) ->
   if lang =='ruby'
     console.log 'h'
   # Create docker file in /tmp
+  console.log 'Generating dockerfile'
   mkdirp './tmp'
   @docker = './tmp/Dockerfile'
   fs.openSync @docker, 'w'
