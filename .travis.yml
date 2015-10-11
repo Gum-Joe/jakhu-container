@@ -12,7 +12,7 @@ addons:
       secure: "eKwnCQlnKZuIlH4GSdJIUSQjAq7hbAxrLvQBCzis86gG2hji1UJxRDRhl+MpMaiUVqQ0u3+MWo4Vg9yyHx8YogWe5kqNCer2CmcDL76Pr4J4CS2wMQkExwwJm1PIuVGPfIWzMfDKnMJsSNRQrDFmUEjA4CCKTGbqnivJrigm98lFAWFc1lNYihvdpyMu+wCgLfLBMEC91nRazNek3eca502O4wVGUZmSg/d2nWbTUyWGuznKEbxHcyPel/wmpj4zS7vyTTDG9ZnJbCTlmhMySs23S+fqCONxhr3qJGH/Uy/BczBduhVKcil3wQmmsoB7mrt3c7sc99LoyXS7+7H/2zoaGmmtq8TWxL3b90LQIou/nZ5rjKTJL+1VDeLD31WKKyBs+ajP+TApgH7C6Iyd4XU4EKadYud7hKJyEox3kBjuJ+CtULw+REkd+xxxNCytoibNchI8XIKi4Fy03xpIYZO1mLF/RYJ4szYZSc7y4446M/JYj2L6sCY1n8CaLToS58Vt7u1YZAswApR186ARgVcdNaD+M4a4hklNS/x9aioyumajkxb6ALjSMfkF80voHfJlX4Bul0OdeSnB5TsMiEz+ld69X3h4DOR/x6MNEQ031aBdcL8Ky0eKte+X1dxsXaRsxJpG9uvuXsg/ZDLmDVmOwdx/Rz6bku2Qtax9K6w="
 
 before_install: npm install -g coffee-script mocha istanbul codeclimate-test-reporter
-install: npm install
+install: npm install && pip install -r req.txt
 script: make ci
 #after_script:
 #  - codeclimate-test-reporter < coverage/lcov.info
