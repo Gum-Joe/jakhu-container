@@ -8,6 +8,7 @@ parse = require './libs/parse.js'
 {spawn} = require 'child_process'
 {exec} = require 'child_process'
 {script} = require './libs/gen.js'
+{run} = require './libs/run.js'
 pull = require './libs/pull.js'
 YAML = require 'yamljs'
 # Read instances
@@ -24,9 +25,10 @@ start = (args, dir) ->
     console.log 'WARN: Ruby version '+ parsed.ruby+' is required. \nPlease consider using Docker'
   if parsed.python != undefined && process.env.WEB_DOCKER == false
     console.log 'WARN: Python version '+ parsed.python+' is required. \nPlease consider using Docker'
+    if parsed.python == '3'
+      console.log 'WARN: You are using Python 3. All python cmd commands must be ran using "python3"'
   if parsed.nodejs == 'latest'
     console.log 'WARN: latest is not a nodejs version. For the latest version, use "stable" instead. We wil swap "latest" for "stable" this time'
-
   if process.env.WEB_DOCKER != false
     console.log '\nPulling Docker images...'
     # Parse config/images.yml
@@ -54,5 +56,9 @@ start = (args, dir) ->
 exports.pullImages = (dir) ->
   # body...
   return pull.pullImages(dir)
+
+exports.run = (image, args) ->
+  # body...
+  return runImage(image, args)
 
 start('test', 'instances')

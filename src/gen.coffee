@@ -1,6 +1,7 @@
 fs = require 'fs'
 mkdirp = require 'mkdirp'
 logger = require '../libs/logger.js'
+{run} = require '../libs/run.js'
 exports.script = (lang, parsed, options) ->
   # Main stuff
   @con = 'startcon.sh'
@@ -89,8 +90,25 @@ exports.script = (lang, parsed, options) ->
   if lang =='ruby'
     console.log 'h'
   # Create docker file in /tmp
-  console.log 'Generating dockerfile'
+  console.log 'Generating dockerfile...'
   mkdirp './tmp'
   @docker = './tmp/Dockerfile'
+  @from = 'FROM gumjoe/web-os-images:'
+  @lang = parsed.language
   fs.openSync @docker, 'w'
+  if @lang == 'nodejs'
+    fs.appendFileSync @docker, @from+'nodejs\n'
+  if @lang == 'ruby'
+    fs.appendFileSync @docker, @from+'ruby\n'
+    if @lang == 'python'
+      if parsed.version == '2'
+        fs.appendFileSync @docker, @from+'python2.7\n'
+      else if parsed.python == '3'
+        console.log 'WARN: You are using Python 3.0. All python cmd commands must be ran using "python3"'
+        fs.appendFileSync @docker, @from+'python3.0\n'
+  fs.appendFileSync @docker, 'COPY . /container/app\nCOPY startcon.sh /container/start.sh\nCMD cd /container && start.sh'
+  console.log 'Preparing to start...'
+  run('docker', ['build', '-f', 'tmp/Dockerfile', '-t','weboscontainer/'+@id, '.'])
+
+        # body...
   logger.logback({id: @id, name: parsed.name, status: 'Running', code: '300', location: parsed.public}, 'http://localhost:8080/api/container/status/update', 'POST', 'node_modules/web-os-logger/')
