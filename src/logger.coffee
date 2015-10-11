@@ -9,9 +9,8 @@ exports.logback = (data, route, type, dir) ->
   if type == 'POST' or 'post'
     request = require 'request'
     request.post route, data, (error, response, body) ->
-          if error
-            assert.fail error, null, 'ERR: Could not report back to Web-OS server'
-          if response.statusCode != 200 and response.statusCode != 304
-            assert.fail error, null, 'ERR: Could not report back to Web-OS server. Is the server running?'
-
-  return
+      # Uncomment - soon
+      #if error
+        #assert.fail error, null, 'ERR: Could not report back to Web-OS server'
+      #if response.statusCode != 200 and response.statusCode != 304
+        #assert.fail error, null, 'ERR: Could not report back to Web-OS server. Is the server running?'
