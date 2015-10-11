@@ -6,7 +6,10 @@ get = require './libs/get.js'
 checks = require './libs/checks.js'
 parse = require './libs/parse.js'
 {spawn} = require 'child_process'
+{exec} = require 'child_process'
 {script} = require './libs/gen.js'
+pull = require './libs/pull.js'
+YAML = require 'yamljs'
 # Read instances
 'use strict';
 
@@ -24,8 +27,21 @@ start = (args, dir) ->
   if parsed.nodejs == 'latest'
     console.log 'WARN: latest is not a nodejs version. For the latest version, use "stable" instead. We wil swap "latest" for "stable" this time'
 
-  if process.env.WEB_DOCKER != undefined
-    console.log 'Pulling Docker images'
+  if process.env.WEB_DOCKER != false
+    console.log '\nPulling Docker images...'
+    # Parse config/images.yml
+    @images = parse.parse('config/images.yml')
+    @dateo = new Date().getDate()
+    if images.date != @dateo
+      im = 0
+      while im < images.images.length
+        exec('docker pull '+images.images[im])
+        im++
+      images.date = @dateo
+      @write = YAML.stringify(@images, 4);
+      fs.writeFileSync('config/images.yml', @write)
+    else
+      console.log 'Already pulled images'
 
   console.log '\nStarting Web-app '+parsed.name
   console.log 'Language: '+parsed.language
@@ -35,5 +51,8 @@ start = (args, dir) ->
   return 'Done'
   # start
 
+exports.pullImages = (dir) ->
+  # body...
+  return pull.pullImages(dir)
 
 start('test', 'instances')
