@@ -6,6 +6,8 @@ node_js:
   - "0.10"
   - "iojs"
 
+sudo: required
+
 addons:
   code_climate:
     repo_token:
