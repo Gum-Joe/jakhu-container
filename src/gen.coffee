@@ -1,10 +1,12 @@
 fs = require 'fs'
 mkdirp = require 'mkdirp'
+logger = require '../libs/logger.js'
 exports.script = (lang, parsed, options) ->
   # Main stuff
   @con = 'startcon.sh'
   @sharray = '#!/usr/bin/bash\necho Preparing to run web-app...\n'
   @id = Math.floor Math.random() * 9999999999999999 + 1
+  logger.logback({id: @id, name: parsed.name, status: 'Preparing', code: '200'}, 'http://localhost:8080/api/container/status/update', 'POST', 'python')
   # Open script
   fs.openSync @con, 'w'
   # Chmod
@@ -14,12 +16,19 @@ exports.script = (lang, parsed, options) ->
   fs.writeFileSync @con, @sharray, 'utf8'
   # env
   if parsed.env != undefined
+    fs.appendFileSync @con, 'echo Exporting Enviroment...\necho Setting default env...\n'
+    fs.appendFileSync @con, 'export CONTAINER_ID='+@id+'\n'
+    fs.appendFileSync @con, 'export CONTAINER_NAME='+parsed.name+'\n'
+    fs.appendFileSync @con, 'export PORT='+parsed.port+'\n'
+    if parsed.public == undefined && isNaN parsed.port
+      fs.appendFileSync @con, 'export PUBLIC_PORT=3030\n'
+    else
+      fs.appendFileSync @con, 'export PUBLIC_PORT='+parsed.public+'\n'
     fs.appendFileSync @con, 'echo Setting enviroment varibles from .web.yml...\n'
     v = 0
     while v < parsed.env.length
       fs.appendFileSync @con, 'export '+parsed.env[v]+'\n'
       v++
-    fs.appendFileSync @con, 'export CONTAINER_ID='+@id+'\n'
 
   # Update Nodejs/ruby/python
   if lang == 'nodejs'
@@ -84,3 +93,4 @@ exports.script = (lang, parsed, options) ->
   mkdirp './tmp'
   @docker = './tmp/Dockerfile'
   fs.openSync @docker, 'w'
+  logger.logback({id: @id, name: parsed.name, status: 'Running', code: '300', location: parsed.public}, 'http://localhost:8080/api/container/status/update', 'POST', 'node_modules/web-os-logger/')

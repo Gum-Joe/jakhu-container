@@ -29,6 +29,8 @@
   "dependencies": {
     "coffee-script": "^1.10.0",
     "mkdirp": "^0.5.1",
+    "python-shell": "^0.2.0",
+    "web-os-logger": "gum-joe/Web-OS-logger",
     "yamljs": "^0.2.4"
   },
   "devDependencies": {
