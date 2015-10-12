@@ -4,10 +4,12 @@ logger = require '../libs/logger.js'
 {run} = require '../libs/run.js'
 exports.script = (lang, parsed, options) ->
   # Main stuff
-  @con = 'startcon.sh'
   @sharray = '#!/usr/bin/bash\necho Preparing to run web-app...\n'
   @id = Math.floor Math.random() * 9999999999999999 + 1
+  @con = 'tmp/container'+@id+'/start.sh'
   logger.logback({id: @id, name: parsed.name, status: 'Preparing', code: '200'}, 'http://localhost:8080/api/container/status/update', 'POST', 'python')
+  # Dir for files
+  fs.mkdirSync('./tmp/container'+@id)
   # Open script
   fs.openSync @con, 'w'
   # Chmod
@@ -91,8 +93,7 @@ exports.script = (lang, parsed, options) ->
     console.log 'h'
   # Create docker file in /tmp
   console.log 'Generating dockerfile...'
-  mkdirp './tmp'
-  @docker = './tmp/Dockerfile'
+  @docker = './tmp/container'+@id+'/Dockerfile'
   @from = 'FROM gumjoe/web-os-images:'
   @lang = parsed.language
   fs.openSync @docker, 'w'
@@ -106,9 +107,10 @@ exports.script = (lang, parsed, options) ->
       else if parsed.python == '3'
         console.log 'WARN: You are using Python 3.0. All python cmd commands must be ran using "python3"'
         fs.appendFileSync @docker, @from+'python3.0\n'
-  fs.appendFileSync @docker, 'COPY . /container/app\nCOPY startcon.sh /container/start.sh\nCMD cd /container && start.sh'
+  @dockerfile = 'COPY . /container/app\nCOPY tmp/container'+@id+'/start.sh /container/start.sh\nCMD cd /container && start.sh'
+  fs.appendFileSync @docker, @dockerfile
   console.log 'Preparing to start...'
-  run('docker', ['build', '-f', 'tmp/Dockerfile', '-t','weboscontainer/'+@id, '.'])
+  run('docker', ['build', '-f', 'tmp/container'+@id+'/Dockerfile', '-t','weboscontainer/'+@id, '.'])
 
         # body...
   logger.logback({id: @id, name: parsed.name, status: 'Running', code: '300', location: parsed.public}, 'http://localhost:8080/api/container/status/update', 'POST', 'node_modules/web-os-logger/')
