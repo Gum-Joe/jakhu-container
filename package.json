@@ -18,7 +18,7 @@
     "nodejs"
   ],
   "bin": {
-    "contain": "bin/cli.js"
+    "tub": "bin/cli.js"
   },
   "author": "Gum-Joe",
   "license": "MIT",

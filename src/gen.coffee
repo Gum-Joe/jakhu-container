@@ -36,7 +36,7 @@ exports.script = (lang, parsed, options) ->
   # Update Nodejs/ruby/python
   if lang == 'nodejs'
     if parsed.nodejs == 'latest'
-      @array = 'echo Updating nodejs...\nnvm install stable\n'
+      @array = 'echo Updating nodejs...\n. ~/.nvm/nvm.sh\nnvm install stable\n'
       fs.appendFileSync @con, @array
     else
       @array = 'echo Updating nodejs...\nnvm install '+parsed.nodejs+'\n'
@@ -46,7 +46,7 @@ exports.script = (lang, parsed, options) ->
       i = 0
       while i < parsed.require.length
         if parsed.require[i] == 'ruby'
-          @ruby = 'echo Installing ruby...\nsudo apt-get install ruby-full\necho Installing bundle...\ngem install bundle\n'
+          @ruby = 'echo Installing ruby...\nsudo apt-get install -y ruby\necho Installing bundle...\ngem install bundle\n'
           fs.appendFileSync @con, @ruby
         i++
     # Global deps
@@ -94,11 +94,11 @@ exports.script = (lang, parsed, options) ->
   # Create docker file in /tmp
   console.log 'Generating dockerfile...'
   @docker = './tmp/container'+@id+'/Dockerfile'
-  @from = 'FROM gumjoe/web-os-images:'
+  @from = 'FROM ubuntu:latest\n'
   @lang = parsed.language
   fs.openSync @docker, 'w'
   if @lang == 'nodejs'
-    fs.appendFileSync @docker, @from+'nodejs\n'
+    fs.appendFileSync @docker, @from+'RUN apt-get install -y curl\nRUN apt-get install -y git-core\nRUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash\n'
   if @lang == 'ruby'
     fs.appendFileSync @docker, @from+'ruby\n'
     if @lang == 'python'
@@ -107,10 +107,10 @@ exports.script = (lang, parsed, options) ->
       else if parsed.python == '3'
         console.log 'WARN: You are using Python 3.0. All python cmd commands must be ran using "python3"'
         fs.appendFileSync @docker, @from+'python3.0\n'
-  @dockerfile = 'COPY . /container/app\nCOPY tmp/container'+@id+'/start.sh /container/start.sh\nCMD cd /container && start.sh'
+  @dockerfile = 'COPY ./instances/web /container/app\nCOPY tmp/container'+@id+'/start.sh /container/start.sh\nCMD cd /container && sh ./start.sh'
   fs.appendFileSync @docker, @dockerfile
   console.log 'Preparing to start...'
-  run('docker', ['build', '-f', 'tmp/container'+@id+'/Dockerfile', '-t','weboscontainer/'+@id, '.'])
+  run('docker', ['build', '-f', 'tmp/container'+@id+'/Dockerfile', '-t','webos/container'+@id, '.'])
 
         # body...
   logger.logback({id: @id, name: parsed.name, status: 'Running', code: '300', location: parsed.public}, 'http://localhost:8080/api/container/status/update', 'POST', 'node_modules/web-os-logger/')

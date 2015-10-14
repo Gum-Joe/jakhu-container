@@ -61,4 +61,4 @@ exports.run = (image, args) ->
   # body...
   return runImage(image, args)
 
-start('test', 'instances')
+start('web', 'instances')
