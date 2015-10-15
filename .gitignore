@@ -30,7 +30,9 @@ node_modules
 libs
 instances
 ./test
-*.js
+./app.js
+bin/cli.js
+t.js
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
