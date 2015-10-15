@@ -1,3 +1,4 @@
+{spawnSync} = require 'child_process'
 {spawn} = require 'child_process'
 {fail} = require 'assert'
 exports.runImage = (image, args) ->
@@ -32,6 +33,19 @@ exports.run = (cmd, args) ->
   if typeof args == 'string'
     fail('undefined', null, 'Args must be an array, or a bug will attck this container')
   ls = spawn(cmd, args)
+  ls.stdout.on 'data', (data) ->
+    console.log 'data:'+data
+    return
+  ls.stderr.on 'data', (data) ->
+    console.log 'errors: ' + data
+    return
+  ls.on 'close', (code) ->
+    console.log 'Exited with code ' + code
+    return
+
+exports.runContainer = (id, port, pub) ->
+  # body...
+  ls = spawn('docker', ['run', '-p', pub+':'+port, 'webos/container'+id])
   ls.stdout.on 'data', (data) ->
     console.log 'data:'+data
     return

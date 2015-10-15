@@ -2,6 +2,7 @@ fs = require 'fs'
 mkdirp = require 'mkdirp'
 logger = require '../libs/logger.js'
 {run} = require '../libs/run.js'
+runc = require '../libs/run.js'
 exports.script = (lang, parsed, options) ->
   # Main stuff
   @sharray = '#!/usr/bin/bash\necho Preparing to run web-app...\n'
@@ -107,10 +108,17 @@ exports.script = (lang, parsed, options) ->
       else if parsed.python == '3'
         console.log 'WARN: You are using Python 3.0. All python cmd commands must be ran using "python3"'
         fs.appendFileSync @docker, @from+'python3.0\n'
-  @dockerfile = 'COPY ./instances/web /container/app\nCOPY tmp/container'+@id+'/start.sh /container/start.sh\nCMD cd /container && sh ./start.sh'
+  @dockerfile = 'COPY ./instances/web /container/app\nCOPY tmp/container'+@id+'/start.sh /container/start.sh\nEXPOSE '+parsed.port+'\nCMD cd /container && sh ./start.sh'
   fs.appendFileSync @docker, @dockerfile
   console.log 'Preparing to start...'
   run('docker', ['build', '-f', 'tmp/container'+@id+'/Dockerfile', '-t','webos/container'+@id, '.'])
 
         # body...
   logger.logback({id: @id, name: parsed.name, status: 'Running', code: '300', location: parsed.public}, 'http://localhost:8080/api/container/status/update', 'POST', 'node_modules/web-os-logger/')
+  console.log 'Starting...'
+  runcon(parsed.id, parsed.port, parsed.public)
+
+runcon = (arg, a, b) ->
+  # body...
+  console.log 'Starting...'
+  runc.runContainer(arg, a, b)
