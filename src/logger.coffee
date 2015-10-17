@@ -1,5 +1,5 @@
-PythonShell = require('python-shell')
-assert = require('assert')
+assert = require 'assert'
+request = require 'request'
 
 exports.logback = (data, route, type, dir) ->
   # body...
@@ -7,7 +7,6 @@ exports.logback = (data, route, type, dir) ->
     assert.fail 'invalid', null, 'Invalid method - values are GET, POST, PUT or DELETE'
     process.exit 1
   if type == 'POST' or 'post'
-    request = require 'request'
     request.post route, data, (error, response, body) ->
       # Uncomment - soon
       #if error
