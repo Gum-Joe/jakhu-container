@@ -87,8 +87,8 @@ exports.script = (lang, parsed, options, dirw) ->
       fs.appendFileSync @con, 'echo Building Web-app...\necho Installing dependencies...\n'
       inc = 0
       while inc < install.length
-        fs.appendFileSync @con, 'echo '+build.script[b]+@enter
-        fs.appendFileSync @con, build.script[b]+@enter
+        fs.appendFileSync @con, 'echo '+install.script[inc]+@enter
+        fs.appendFileSync @con, install.script[inc]+@enter
         b++
       fs.appendFileSync @con, 'echo Building...\n'
       b = 0
