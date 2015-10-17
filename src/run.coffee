@@ -1,7 +1,7 @@
 {spawnSync} = require 'child_process'
 {spawn} = require 'child_process'
 {fail} = require 'assert'
-{logback} = require 'assert'
+{logback} = require './logger.js'
 exports.runImage = (image, args) ->
   # body...
   if image == undefined

@@ -2,6 +2,7 @@ fs = require 'fs'
 mkdirp = require 'mkdirp'
 logger = require '../libs/logger.js'
 {run} = require '../libs/run.js'
+{runSend} = require '../libs/run.js'
 {runSync} = require '../libs/run.js'
 runc = require '../libs/run.js'
 exports.script = (lang, parsed, options, dirw) ->
