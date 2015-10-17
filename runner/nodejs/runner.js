@@ -1,9 +1,12 @@
-var requestify = require('requestify');
+var express = require('express');
+var spawn = require('child_process').spwan
+var app = express();
 
-requestify.post('http://example.com', {
-    hello: 'world'
-})
-.then(function(response) {
-    // Get the response body (JSON parsed or jQuery object for XMLs)
-    response.getBody();
+var port = process.env.COMTAINER_RECIEVER_PORT
+app.listen(3001, function () {
+  console.log('Listening...');
+});
+
+app.get('/', function (req, res) {
+  res.send('Starting Web-app...')
 });

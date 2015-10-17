@@ -83,13 +83,13 @@ exports.script = (lang, parsed, options, dirw) ->
     if parsed.build != undefined
       # body...
       @build = parsed.build
-      @install = parsed.build
-      fs.appendFileSync @con, 'echo Building Web-app...\necho Installing dependencies...\n'
+      @install = parsed.install
+      fs.appendFileSync @con, 'echo Installing dependencies...\n'
       inc = 0
       while inc < install.length
-        fs.appendFileSync @con, 'echo '+install.script[inc]+@enter
-        fs.appendFileSync @con, install.script[inc]+@enter
-        b++
+        fs.appendFileSync @con, 'echo '+install[inc]+@enter
+        fs.appendFileSync @con, install[inc]+@enter
+        inc++
       fs.appendFileSync @con, 'echo Building...\n'
       b = 0
       while b < build.script.length
