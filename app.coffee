@@ -49,7 +49,7 @@ start = (args, dir) ->
   console.log 'Language: '+parsed.language
 
   if process.env.WEB_DOCKER != false
-    script(parsed.language, parsed)
+    script(parsed.language, parsed, null, dir+'/'+args)
   return 'Done'
   # start
 
