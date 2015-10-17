@@ -10,7 +10,7 @@ exports.script = (lang, parsed, options, dirw) ->
   @sharray = '#!/usr/bin/bash\necho Preparing to run web-app...\n'
   @id = Math.floor Math.random() * 9999999999999999 + 1
   @con = '.tubs/tub'+@id+'/start.sh'
-  logger.logback({id: @id, name: parsed.name, status: 'Preparing', code: '200'}, 'http://localhost:8080/api/tubs/update/status', 'POST')
+  logger.logback(form: {id: @id, name: parsed.name, status: 'Preparing', code: '200'}, 'http://localhost:8080/api/tubs/update/status', 'POST')
   # Dir for files
   if fs.existsSync '.tubs' != true
     fs.mkdirSync('./.tubs')
@@ -125,7 +125,7 @@ exports.script = (lang, parsed, options, dirw) ->
   console.log 'Preparing to start...'
   runSend('sh', ['~/.web/tubs/build.sh', '.tubs/tub'+@id+'/Dockerfile', 'webos/tub'+@id, parsed.public+':'+parsed.port, 'webos/tub'+@id], @id, parsed)
         # body...
-  logger.logback({id: @id, name: parsed.name, status: 'Running', code: '300', location: parsed.public}, 'http://localhost:8080/api/tubs/update/status', 'POST', 'node_modules/web-os-logger/')
+  logger.logback(form: {id: @id, name: parsed.name, status: 'Running', code: '300', location: parsed.public}, 'http://localhost:8080/api/tubs/update/status', 'POST', 'node_modules/web-os-logger/')
 
 runcon = (arg, a, b) ->
   # body...

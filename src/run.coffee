@@ -90,12 +90,12 @@ exports.runSend = (cmd, args, id, parsed) ->
   ls = spawn(cmd, args)
   ls.stdout.on 'data', (data) ->
     @host = 'http://localhost:8080/api/tubs/log'
-    logback({id: id, name: parsed.name, code: '300', location: parsed.public, data: data}, @host, 'POST')
+    logback(form: {id: id, name: parsed.name, code: '300', location: parsed.public, data: data}, @host, 'POST')
     console.log ''+data
     return
   ls.stderr.on 'data', (data) ->
     @host = 'http://localhost:8080/api/tubs/log'
-    logback({id: id, name: parsed.name, code: '300', location: parsed.public, data: data}, @host, 'POST')
+    logback(form: {id: id, name: parsed.name, code: '300', location: parsed.public, data: data}, @host, 'POST')
     console.log 'Errors: ' + data
     return
   ls.on 'close', (code) ->
