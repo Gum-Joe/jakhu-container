@@ -8,10 +8,12 @@ exports.script = (lang, parsed, options) ->
   # Main stuff
   @sharray = '#!/usr/bin/bash\necho Preparing to run web-app...\n'
   @id = Math.floor Math.random() * 9999999999999999 + 1
-  @con = 'tmp/container'+@id+'/start.sh'
+  @con = '.tubs/tub'+@id+'/start.sh'
   logger.logback({id: @id, name: parsed.name, status: 'Preparing', code: '200'}, 'http://localhost:8080/api/container/status/update', 'POST', 'python')
   # Dir for files
-  fs.mkdirSync('./tmp/container'+@id)
+  if fs.existsSync '.tubs' != true
+    fs.mkdirSync('./.tubs')
+  fs.mkdirSync('./.tubs/tub'+@id)
   # Open script
   fs.openSync @con, 'w'
   # Chmod
@@ -95,7 +97,7 @@ exports.script = (lang, parsed, options) ->
     console.log 'h'
   # Create docker file in /tmp
   console.log 'Generating dockerfile...'
-  @docker = './tmp/container'+@id+'/Dockerfile'
+  @docker = './.tubs/tub'+@id+'/Dockerfile'
   @from = 'FROM ubuntu:latest\n'
   @lang = parsed.language
   fs.openSync @docker, 'w'
@@ -112,10 +114,9 @@ exports.script = (lang, parsed, options) ->
   @dockerfile = 'COPY ./instances/web /container/app\nCOPY tmp/container'+@id+'/start.sh /container/start.sh\nEXPOSE '+parsed.port+'\nCMD cd /container && sh ./start.sh'
   fs.appendFileSync @docker, @dockerfile
   console.log 'Preparing to start...'
-  run('docker', ['build', '-f', 'tmp/container'+@id+'/Dockerfile', '-t','webos/container'+@id, '.'])
+  run('docker', ['build', '-f', '.tubs/tub'+@id+'/Dockerfile', '-t','webos/tub'+@id, '.'])
         # body...
   logger.logback({id: @id, name: parsed.name, status: 'Running', code: '300', location: parsed.public}, 'http://localhost:8080/api/container/status/update', 'POST', 'node_modules/web-os-logger/')
-  console.log 'Starting...'
 
 runcon = (arg, a, b) ->
   # body...

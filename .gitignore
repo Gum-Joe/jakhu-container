@@ -46,7 +46,6 @@ __pycache__/
 env/
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -94,3 +93,6 @@ target/
 
 #tmp
 tmp/
+
+# .tubs
+.tubs
