@@ -32,8 +32,16 @@ exports.run = (cmd, args) ->
     fail('undefined', null, 'Good job for telling us what you want to execute, but please use null if you do not want any args.')
   if typeof args == 'string'
     fail('undefined', null, 'Args must be an array, or a bug will attck this container')
-  ls = spawnSync(cmd, args)
-  console.log ls.stdout.on
+  ls = spawn(cmd, args)
+  ls.stdout.on 'data', (data) ->
+    console.log data.toString('utf8')
+    return
+  ls.stderr.on 'data', (data) ->
+    console.log 'Errors: ' + data
+    return
+  ls.on 'close', (code) ->
+    console.log 'Exited with code ' + code
+    return
   #return
   # ls.stdout.on 'data', (data) ->
   #   console.log 'data:'+data
