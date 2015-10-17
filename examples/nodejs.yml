@@ -1,22 +1,35 @@
 # Configures Web-app
 # Language
 language: nodejs
-nodejs: 0.12
+nodejs: latest
 require:
   - ruby
-name: test
+name: web-os
 # Command to start
-start: npm start
+start: node bin/start
+
+port: 8080
+# Public port that is revaeled by docker (3030 by default)
+public: 3000
 # Install - npm install for nodejs
+global:
+  npm:
+    - bower
+    - grunt-cli
+    - nodemon
+  gem:
+    - sass
+
+env:
+  - WEB_DOCKER=false
+  - NODE_ENV=dev
+
 install:
   - npm install
-  - gem install bundle
-  - bundle install
+# Global deps
+
 
 build:
   # Build?
-  true: true
-  #OS to run on - Ubuntu or CentOS
-  os: Ubuntu
-  # Command to run
-  run: make
+  script:
+    - grunt compile

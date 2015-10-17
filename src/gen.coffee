@@ -101,11 +101,9 @@ exports.script = (lang, parsed, options, dirw) ->
     if parsed.port != undefined
       fs.appendFileSync @con, 'export PORT='+parsed.port+@enter
     fs.appendFileSync @con, parsed.start
-    console.log '\nStart script Generated'
   if lang =='ruby'
     console.log 'h'
   # Create docker file in /tmp
-  console.log 'Generating dockerfile...'
   @docker = './.tubs/tub'+@id+'/Dockerfile'
   @from = 'FROM ubuntu:latest\n'
   @lang = parsed.language
@@ -122,7 +120,6 @@ exports.script = (lang, parsed, options, dirw) ->
         fs.appendFileSync @docker, @from+'python3.0\n'
   @dockerfile = 'COPY '+dirw+' /container/app\nCOPY .tubs/tub'+@id+'/start.sh /container/start.sh\nEXPOSE '+parsed.port+'\nCMD cd /container && sh ./start.sh'
   fs.appendFileSync @docker, @dockerfile
-  console.log 'Preparing to start...'
   runSend('sh', ['~/.web/tubs/build.sh', '.tubs/tub'+@id+'/Dockerfile', 'webos/tub'+@id, parsed.public+':'+parsed.port, 'webos/tub'+@id], @id, parsed)
         # body...
   logger.logback(form: {id: @id, name: parsed.name, status: 'Running', code: '300', location: parsed.public}, 'http://localhost:8080/api/tubs/update/status', 'POST', 'node_modules/web-os-logger/')
