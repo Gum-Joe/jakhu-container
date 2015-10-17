@@ -1,6 +1,8 @@
 #!/usr/bin/bash
 
 # Build image
-docker $1 $2 $3 $4 $5 $6
+docker build -f $1 -t $2 .
 # RUN
-sh ~/.web/tubs/run.sh
+echo Running...
+docker run -d -p $3 -t $4
+exit 0
