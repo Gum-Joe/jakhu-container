@@ -114,7 +114,7 @@ exports.script = (lang, parsed, options) ->
   @dockerfile = 'COPY ./instances/web /container/app\nCOPY tmp/container'+@id+'/start.sh /container/start.sh\nEXPOSE '+parsed.port+'\nCMD cd /container && sh ./start.sh'
   fs.appendFileSync @docker, @dockerfile
   console.log 'Preparing to start...'
-  run('docker', ['build', '-f', '.tubs/tub'+@id+'/Dockerfile', '-t','webos/tub'+@id, '.'])
+  run('~/.web/tubs/build.sh', ['.tubs/tub'+@id+'/Dockerfile', 'webos/tub'+@id, parsed.public+':'+parsed.port])
         # body...
   logger.logback({id: @id, name: parsed.name, status: 'Running', code: '300', location: parsed.public}, 'http://localhost:8080/api/container/status/update', 'POST', 'node_modules/web-os-logger/')
 
