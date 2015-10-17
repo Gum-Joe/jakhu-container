@@ -8,8 +8,11 @@ logger = require '../../libs/logger.js'
 runc = require '../../libs/run.js'
 generator = require '../../libs/generator.js'
 
-exports.generate = (parsed, idw, conw) ->
+'use strict'
+
+exports.generate = (parsed, idw, conw, dirw) ->
   # body...
+  lang = parsed.language
   @con = conw
   @lang = parsed.language
   @id = idw
@@ -57,8 +60,8 @@ exports.generate = (parsed, idw, conw) ->
     # Install
     if parsed.build != undefined
       # body...
-      @build = parsed.build
-      @install = parsed.install
+      build = parsed.build
+      install = parsed.install
       fs.appendFileSync @con, 'echo Installing dependencies...\n'
       inc = 0
       while inc < install.length
