@@ -79,10 +79,18 @@ exports.script = (lang, parsed, options, dirw) ->
           g++
       # if parsed.global
     fs.appendFileSync @con, @cd
+    # Install
     if parsed.build != undefined
       # body...
       @build = parsed.build
-      fs.appendFileSync @con, 'echo Building Web-app...\n'
+      @install = parsed.build
+      fs.appendFileSync @con, 'echo Building Web-app...\necho Installing dependencies...\n'
+      inc = 0
+      while inc < install.length
+        fs.appendFileSync @con, 'echo '+build.script[b]+@enter
+        fs.appendFileSync @con, build.script[b]+@enter
+        b++
+      fs.appendFileSync @con, 'echo Building...\n'
       b = 0
       while b < build.script.length
         fs.appendFileSync @con, build.script[b]+@enter
@@ -111,7 +119,7 @@ exports.script = (lang, parsed, options, dirw) ->
       else if parsed.python == '3'
         console.log 'WARN: You are using Python 3.0. All python cmd commands must be ran using "python3"'
         fs.appendFileSync @docker, @from+'python3.0\n'
-  @dockerfile = 'COPY ./instances/web'+dirw+'\nCOPY .tubs/tub'+@id+'/start.sh /container/start.sh\nEXPOSE '+parsed.port+'\nCMD cd /container && sh ./start.sh'
+  @dockerfile = 'COPY '+dirw+' /container/app\nCOPY .tubs/tub'+@id+'/start.sh /container/start.sh\nEXPOSE '+parsed.port+'\nCMD cd /container && sh ./start.sh'
   fs.appendFileSync @docker, @dockerfile
   console.log 'Preparing to start...'
   run('sh', ['~/.web/tubs/build.sh', '.tubs/tub'+@id+'/Dockerfile', 'webos/tub'+@id, parsed.public+':'+parsed.port, 'webos/tub'+@id])
