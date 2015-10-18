@@ -1,0 +1,35 @@
+# Configures Web-app
+# Language
+language: nodejs
+nodejs: latest
+require:
+  - ruby
+name: nodejs-app
+# Command to start
+start: node bin/start
+
+port: 8080
+# Public port that is revaeled by docker (3030 by default)
+public: 3000
+# Install - npm install for nodejs
+global:
+  npm:
+    - bower
+    - grunt-cli
+    - nodemon
+  gem:
+    - sass
+
+env:
+  - WEB_DOCKER=false
+  - NODE_ENV=dev
+
+install:
+  - npm install
+# Global deps
+
+
+build:
+  # Build?
+  script:
+    - grunt compile

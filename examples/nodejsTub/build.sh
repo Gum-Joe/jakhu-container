@@ -1,0 +1,19 @@
+#!/usr/bin/bash
+echo Preparing to run web-app...
+echo . /container/env.sh
+. /container/env.sh
+echo Updating nodejs...
+. ~/.nvm/nvm.sh
+echo nvm install stable
+nvm install stable
+echo Installing ruby...
+sudo apt-get install -y ruby
+echo Installing bundle...
+gem install bundle
+
+cd ./app
+echo Installing dependencies...
+echo npm install
+npm install
+echo Building...
+grunt compile

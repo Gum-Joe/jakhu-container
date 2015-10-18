@@ -74,4 +74,4 @@ exports.run = (image, args) ->
   # body...
   return runImage(image, args)
 
-start('python', 'instances')
+start('nodejs', 'instances')

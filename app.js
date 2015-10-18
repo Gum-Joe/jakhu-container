@@ -98,6 +98,6 @@
     return runImage(image, args);
   };
 
-  start('python', 'instances');
+  start('nodejs', 'instances');
 
 }).call(this);
