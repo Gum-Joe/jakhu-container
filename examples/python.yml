@@ -1,21 +1,34 @@
-# An exmaple ruby instances config
+# An exmaple python instances config
+# Configures Web-app
+# Language
 language: python
-python:
-  - 2.7
+python: 2
+require:
+  - java
+  - nodejs
+  - ruby
+name: python-app
+# Command to start
+start: bin/app.py
 
-name: python
-
-start: python start.py
+port: 8080
+# Public port that is revaeled by docker (3030 by default)
+public: 3000
 # Install - npm install for nodejs
+global:
+  gem:
+    - sass
+
+env:
+  - WEB_DOCKER=false
+  - RAILS_ENV=dev
+
 install:
-  # Need package manager clarification
-  - pip install
+  - python install.py
+# Global deps
+pip: req.txt
 
 build:
-  # Build modules such as C++, C# or Coffee-script .etc? or setup.py
-  # setup.py here
-  true: true
-  #OS to run on - Ubuntu or CentOS
-  os: Ubuntu
-  # Command to run
-  run: python setup.py
+  # Build?
+  script:
+    - python build.py
