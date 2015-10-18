@@ -99,6 +99,7 @@ exports.generate = (parsed, idw, conw, dirw) ->
   @rubyi = 'RUN echo Installing prerequisites...\nRUN apt-get install -y gnupg\n'
   @ruby = 'RUN echo Installing ruby...\nRUN apt-get install -y ruby\n'
   @rvm = 'RUN echo Installing rvm...\nRUN '+@gpg+'\nRUN curl -sSL https://get.rvm.io | bash\n'
+  @rvm = 'RUN echo Installing rails and bundle...\nRUN gem install bundle rails\n'
   fs.openSync @docker, 'w'
   fs.appendFileSync @docker, @from
   fs.appendFileSync @docker, @rubyi
