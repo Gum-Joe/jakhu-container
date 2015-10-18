@@ -40,6 +40,8 @@ exports.script = (lang, parsed, options, dirw) ->
       v++
   if parsed.language == 'nodejs'
     generate.nodejs.generate(parsed, @id, @con, dirw)
+  if parsed.language == 'ruby'
+    generate.ruby.generate(parsed, @id, @con, dirw)
 runcon = (arg, a, b) ->
   # body...
   console.log 'Starting...'
