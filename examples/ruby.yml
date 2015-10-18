@@ -1,20 +1,36 @@
 # An exmaple ruby instances config
+# Configures Web-app
+
+# Language
 language: ruby
-ruby:
-  - latest
-
-name: ruby
-
+ruby: latest
+require:
+  - java
+  - nodejs
+  - python
+name: ruby-app
+# Command to start
 start: bin/rails server
+
+port: 8080
+# Public port that is revaeled by docker (3030 by default)
+public: 3000
 # Install - npm install for nodejs
+global:
+  npm:
+    - less
+  gem:
+    - sass
+
+env:
+  - WEB_DOCKER=false
+  - RAILS_ENV=dev
+
 install:
-  - gem install bundle
   - bundle install
+# Global deps
 
 build:
-  # Build modules such as C++, C# or Coffee-script .etc?
-  true: true
-  #OS to run on - Ubuntu or CentOS
-  os: Ubuntu
-  # Command to run
-  run: make build
+  # Build?
+  script:
+    - rake
