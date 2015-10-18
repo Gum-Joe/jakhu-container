@@ -4,7 +4,7 @@ language: nodejs
 nodejs: latest
 require:
   - ruby
-name: web-os
+name: nodejs-app
 # Command to start
 start: node bin/start
 
