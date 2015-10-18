@@ -52,6 +52,8 @@ exports.script = (lang, parsed, options, dirw) ->
 
   # Version file
   version.generate(@id)
+  # insert a .web.yaml
+  fs.createReadStream(dirw+'/.web.yml').pipe(fs.createWriteStream('.tubs/tub'+@id+'/.web.yml'));
 
   if parsed.language == 'nodejs'
     generate.nodejs.generate(parsed, @id, @con, dirw)
