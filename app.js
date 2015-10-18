@@ -98,6 +98,6 @@
     return runImage(image, args);
   };
 
-  start('nodejs', 'instances');
+  start('rubyapp', 'instances');
 
 }).call(this);
