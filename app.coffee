@@ -24,6 +24,8 @@ errc = cli.cyanBright('tub ')+cli.redBright('ERR: ')
 start = (args, dir) ->
   # Check instances
   checks.instances(dir, true)
+  # .web.yml
+
   # Parse YAML
   @parsed = parse.parse(dir+'/'+args+'/.web.yml')
   if parsed.nodejs != undefined && process.env.WEB_DOCKER == false
@@ -72,4 +74,4 @@ exports.run = (image, args) ->
   # body...
   return runImage(image, args)
 
-start('web', 'instances')
+start('nodejs', 'instances')
