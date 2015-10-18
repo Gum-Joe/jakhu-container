@@ -34,9 +34,6 @@ exports.generate = (parsed, idw, conw, dirw) ->
       if parsed.require[i] == 'ruby'
         @ruby = 'echo Installing ruby...\nsudo apt-get install -y ruby\necho Installing bundle...\ngem install bundle\n'
         fs.appendFileSync @con, @ruby
-      if parsed.require[i] == 'nodejs'
-        @nodejs = 'echo Installing nodejs...\ncurl -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash\n. ~/.nvm/nvm.sh\nnvm install stable\n'
-        fs.appendFileSync @con, @nodejs
       if parsed.require[i] == 'python2'
         @python = 'echo Installing python...\necho apt-get install -y python\napt-get install -y python'
         fs.appendFileSync @con, @python
@@ -44,8 +41,8 @@ exports.generate = (parsed, idw, conw, dirw) ->
         @p = 'echo Installing python...\necho apt-get install -y python3\napt-get install -y python3'
         fs.appendFileSync @con, @p
       if parsed.require[i] == 'java'
-        @javap = 'openjdk-7-jre openjdk-7-jdk maven ant'
-        @java = 'echo Installing java7...\necho apt-get install -y '+@javap+'\n'+@javap
+        @javap = 'openjdk-7-jre openjdk-7-jdk maven ant\n'
+        @java = 'echo Installing java7...\necho apt-get install -y '+@javap+'apt-get install -y '+@javap
         fs.appendFileSync @con, @java
       i++
     # Global deps

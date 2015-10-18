@@ -17,15 +17,12 @@ exports.generate = (parsed, idw, conw, dirw) ->
   @lang = parsed.language
   @id = idw
   # Update Nodejs/ruby/python
-  if parsed.python == '2'
+
+  if parsed.python == 2
     @array = 'echo Installing python 2.7...\necho apt-get install -y python\napt-get install -y python\n'
     fs.appendFileSync @con, @array
-  else if parsed.python == undefined
-    # body...
-    @array = 'echo Installing nodejs...\n. ~/.nvm/nvm.sh\necho nvm install stable\nnvm install stable\n'
-    fs.appendFileSync @con, @array
-  else
-    @array = 'echo Updating nodejs...\necho nvm install '+parsed.nodejs+'\nnvm install '+parsed.nodejs+'\n'
+  if parsed.python == 3
+    @array = 'echo Installing python 3...\necho apt-get install -y python3\napt-get install -y python3\n'
     fs.appendFileSync @con, @array
   # Required
   if parsed.require != undefined
@@ -37,17 +34,11 @@ exports.generate = (parsed, idw, conw, dirw) ->
       if parsed.require[i] == 'nodejs'
         @nodejs = 'echo Installing nodejs...\ncurl -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash\n. ~/.nvm/nvm.sh\nnvm install stable\n'
         fs.appendFileSync @con, @nodejs
-      if parsed.require[i] == 'python2'
-        @python = 'echo Installing python...\necho apt-get install -y python\napt-get install -y python'
-        fs.appendFileSync @con, @python
-      if parsed.require[i] == 'python'
-        @p = 'echo Installing python...\necho apt-get install -y python3\napt-get install -y python3'
-        fs.appendFileSync @con, @p
       if parsed.require[i] == 'java'
-        @javap = 'openjdk-7-jre openjdk-7-jdk maven ant'
-        @java = 'echo Installing java7...\necho apt-get install -y '+@javap+'\n'+@javap
+        @javap = 'openjdk-7-jre openjdk-7-jdk maven ant\n'
+        @java = 'echo Installing java7...\necho apt-get install -y '+@javap+'apt-get install -y '+@javap
         fs.appendFileSync @con, @java
-        i++
+      i++
     # Global deps
     @cd = '\ncd ./app\n'
     @global = parsed.global
@@ -80,6 +71,9 @@ exports.generate = (parsed, idw, conw, dirw) ->
       build = parsed.build
       install = parsed.install
       fs.appendFileSync @con, 'echo Installing dependencies...\n'
+      # pip
+      if parsed.pip != undefined
+        fs.appendFileSync @con, 'pip install -r '+parsed.pip+'\n'
       inc = 0
       while inc < install.length
         fs.appendFileSync @con, 'echo '+install[inc]+@enter
@@ -91,26 +85,14 @@ exports.generate = (parsed, idw, conw, dirw) ->
         fs.appendFileSync @con, build.script[b]+@enter
         b++
     # if
-    fs.appendFileSync @con, 'echo Starting Web-app...\n'
-    if parsed.port != undefined
-      fs.appendFileSync @con, 'export PORT='+parsed.port+@enter
-    fs.appendFileSync @con, parsed.start
+  # Py
   # Create docker file in /tmp
   @docker = './.tubs/tub'+@id+'/Dockerfile'
   @from = 'FROM ubuntu:latest\n'
   @lang = parsed.language
   fs.openSync @docker, 'w'
-  if @lang == 'nodejs'
-    fs.appendFileSync @docker, @from+'RUN apt-get install -y curl\nRUN apt-get install -y git-core\nRUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash\n'
-  if @lang == 'ruby'
-    fs.appendFileSync @docker, @from+'ruby\n'
-    if @lang == 'python'
-      if parsed.version == '2'
-        fs.appendFileSync @docker, @from+'python2.7\n'
-      else if parsed.python == '3'
-        console.log 'WARN: You are using Python 3.0. All python cmd commands must be ran using "python3"'
-        fs.appendFileSync @docker, @from+'python3.0\n'
-  @dockerfile = 'COPY '+dirw+' /container/app\nCOPY .tubs/tub'+@id+'/start.sh /container/start.sh\nEXPOSE '+parsed.port+'\nCMD cd /container && sh ./start.sh'
+  fs.appendFileSync @docker, @from
+  @dockerfile = 'COPY .tubs/tub'+@id+' /container\nCOPY '+dirw+' /container/app\nRUN cd /container; sh build.sh\nEXPOSE '+parsed.port+'\nCMD cd /container && sh ./start.sh'
   fs.appendFileSync @docker, @dockerfile
   runSend('sh', ['~/.web/tubs/build.sh', '.tubs/tub'+@id+'/Dockerfile', 'webos/tub'+@id, parsed.public+':'+parsed.port, 'webos/tub'+@id], @id, parsed)
         # body...

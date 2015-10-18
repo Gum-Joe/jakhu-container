@@ -38,7 +38,7 @@ exports.generate = (parsed, idw, conw, dirw) ->
         @nodejs = 'echo Installing nodejs...\ncurl -o- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | bash\n. ~/.nvm/nvm.sh\nnvm install stable\n'
         fs.appendFileSync @con, @nodejs
       if parsed.require[i] == 'python2'
-        @python = 'echo Installing python...\necho apt-get install -y python\napt-get install -y python\n'
+        @python = 'echo Installing python 2...\necho apt-get install -y python\napt-get install -y python\n'
         fs.appendFileSync @con, @python
       if parsed.require[i] == 'python'
         @p = 'echo Installing python...\necho apt-get install -y python3\napt-get install -y python3\n'
