@@ -88,7 +88,7 @@ exports.generate = (parsed, idw, conw, dirw) ->
   # Py
   # Create docker file in /tmp
   @docker = './.tubs/tub'+@id+'/Dockerfile'
-  @from = 'FROM ubuntu:latest\n'
+  @from = 'FROM ubuntu:latest\nRUN apt-get update\nRUN apt-get install -y curl\nRUN apt-get install -y git-core\n'
   @lang = parsed.language
   fs.openSync @docker, 'w'
   fs.appendFileSync @docker, @from
