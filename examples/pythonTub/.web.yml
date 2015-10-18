@@ -1,0 +1,34 @@
+# An exmaple python instances config
+# Configures Web-app
+# Language
+language: python
+python: 2
+require:
+  - java
+  - nodejs
+  - ruby
+name: python-app
+# Command to start
+start: bin/app.py
+
+port: 8080
+# Public port that is revaeled by docker (3030 by default)
+public: 3000
+# Install - npm install for nodejs
+global:
+  gem:
+    - sass
+
+env:
+  - WEB_DOCKER=false
+  - RAILS_ENV=dev
+
+install:
+  - python install.py
+# Global deps
+pip: req.txt
+
+build:
+  # Build?
+  script:
+    - python build.py
