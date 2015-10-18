@@ -47,7 +47,7 @@ exports.generate = (parsed, idw, conw, dirw) ->
         @javap = 'openjdk-7-jre openjdk-7-jdk maven ant'
         @java = 'echo Installing java7...\necho apt-get install -y '+@javap+'\n'+@javap
         fs.appendFileSync @con, @java
-        i++
+      i++
     # Global deps
     @cd = '\ncd ./app\n'
     @global = parsed.global
@@ -91,10 +91,6 @@ exports.generate = (parsed, idw, conw, dirw) ->
         fs.appendFileSync @con, build.script[b]+@enter
         b++
     # if
-    fs.appendFileSync @con, 'echo Starting Web-app...\n'
-    if parsed.port != undefined
-      fs.appendFileSync @con, 'export PORT='+parsed.port+@enter
-    fs.appendFileSync @con, parsed.start
   # Create docker file in /tmp
   @docker = './.tubs/tub'+@id+'/Dockerfile'
   @from = 'FROM ubuntu:latest\n'
@@ -110,7 +106,7 @@ exports.generate = (parsed, idw, conw, dirw) ->
       else if parsed.python == '3'
         console.log 'WARN: You are using Python 3.0. All python cmd commands must be ran using "python3"'
         fs.appendFileSync @docker, @from+'python3.0\n'
-  @dockerfile = 'COPY '+dirw+' /container/app\nCOPY .tubs/tub'+@id+'/start.sh /container/start.sh\nEXPOSE '+parsed.port+'\nCMD cd /container && sh ./start.sh'
+  @dockerfile = '\nCOPY .tubs/tub'+@id+' /container\nCOPY '+dirw+' /container/app\nRUN cd /container; sh ./build.sh\nEXPOSE '+parsed.port+'\nCMD cd /container && sh ./start.sh'
   fs.appendFileSync @docker, @dockerfile
   runSend('sh', ['~/.web/tubs/build.sh', '.tubs/tub'+@id+'/Dockerfile', 'webos/tub'+@id, parsed.public+':'+parsed.port, 'webos/tub'+@id], @id, parsed)
         # body...

@@ -1,5 +1,4 @@
 # Python generator
-
 fs = require 'fs'
 mkdirp = require 'mkdirp'
 logger = require '../../libs/logger.js'

@@ -91,10 +91,6 @@ exports.generate = (parsed, idw, conw, dirw) ->
         fs.appendFileSync @con, 'echo '+build.script[b]+@enter+build.script[b]+@enter
         b++
     # if
-    fs.appendFileSync @con, 'echo Starting Web-app...\n'
-    if parsed.port != undefined
-      fs.appendFileSync @con, 'export PORT='+parsed.port+@enter
-    fs.appendFileSync @con, parsed.start
   # Create docker file in /tmp
   @gpg = 'gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3'
   @docker = './.tubs/tub'+@id+'/Dockerfile'
@@ -109,7 +105,7 @@ exports.generate = (parsed, idw, conw, dirw) ->
   fs.appendFileSync @docker, @ruby
   fs.appendFileSync @docker, @rvm
 
-  @dockerfile = 'COPY '+dirw+' /container/app\nCOPY .tubs/tub'+@id+'/start.sh /container/start.sh\nEXPOSE '+parsed.port+'\nCMD cd /container && sh ./start.sh'
+  @dockerfile = 'COPY .tubs/tub'+@id+' /container\nCOPY '+dirw+' /container/app\nEXPOSE '+parsed.port+'\nCMD cd /container && sh ./start.sh'
   fs.appendFileSync @docker, @dockerfile
   runSend('sh', ['~/.web/tubs/build.sh', '.tubs/tub'+@id+'/Dockerfile', 'webos/tub'+@id, parsed.public+':'+parsed.port, 'webos/tub'+@id], @id, parsed)
         # body...

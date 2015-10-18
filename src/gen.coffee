@@ -8,9 +8,10 @@ runc = require '../libs/run.js'
 generate = require '../libs/generator.js'
 exports.script = (lang, parsed, options, dirw) ->
   # Main stuff
-  @sharray = '#!/usr/bin/bash\necho Preparing to run web-app...\n'
+  @sharray = '#!/usr/bin/bash\necho Preparing to run web-app...\necho . /container/env.sh\n. /container/env.sh\n'
   @id = Math.floor Math.random() * 9999999999999999 + 1
-  @con = '.tubs/tub'+@id+'/start.sh'
+  @con = '.tubs/tub'+@id+'/build.sh'
+  @source = '.tubs/tub'+@id+'/env.sh'
   logger.logback(form: {id: @id, name: parsed.name, status: 'Preparing', code: '200'}, 'http://localhost:8080/api/tubs/update/status', 'POST')
   # Dir for files
   if fs.existsSync '.tubs' != true
@@ -23,21 +24,31 @@ exports.script = (lang, parsed, options, dirw) ->
   fs.chmodSync @con, '777'
   # Write shebang
   fs.writeFileSync @con, @sharray, 'utf8'
+
+  fs.appendFileSync @source, 'echo Exporting Enviroment...\n'
+  fs.appendFileSync @source, 'export CONTAINER_ID='+@id+'\n'
+  fs.appendFileSync @source, 'export CONTAINER_NAME='+parsed.name+'\n'
+  fs.appendFileSync @source, 'export PORT='+parsed.port+'\n'
+  if parsed.public == undefined && isNaN parsed.port
+    fs.appendFileSync @source, 'export PUBLIC_PORT=3030\n'
+  else
+    fs.appendFileSync @source, 'export PUBLIC_PORT='+parsed.public+'\n'
   # env
   if parsed.env != undefined
-    fs.appendFileSync @con, 'echo Exporting Enviroment...\n'
-    fs.appendFileSync @con, 'export CONTAINER_ID='+@id+'\n'
-    fs.appendFileSync @con, 'export CONTAINER_NAME='+parsed.name+'\n'
-    fs.appendFileSync @con, 'export PORT='+parsed.port+'\n'
-    if parsed.public == undefined && isNaN parsed.port
-      fs.appendFileSync @con, 'export PUBLIC_PORT=3030\n'
-    else
-      fs.appendFileSync @con, 'export PUBLIC_PORT='+parsed.public+'\n'
-    fs.appendFileSync @con, 'echo Setting enviroment varibles from .web.yml...\n'
+    fs.appendFileSync @source, 'echo Setting enviroment varibles from .web.yml...\n'
     v = 0
     while v < parsed.env.length
-      fs.appendFileSync @con, 'export '+parsed.env[v]+'\n'
+      fs.appendFileSync @source, 'export '+parsed.env[v]+'\n'
       v++
+
+  @start = '.tubs/tub'+@id+'/start.sh'
+  @enter = '\n'
+  fs.appendFileSync @start, '#!/usr/bin/bash\n'
+  fs.appendFileSync @start, 'echo Starting Web-app...\ncd /container/app\n. ./env.sh\n'
+  if parsed.port != undefined
+    fs.appendFileSync @start, 'export PORT='+parsed.port+@enter
+  fs.appendFileSync @start, parsed.start
+
   if parsed.language == 'nodejs'
     generate.nodejs.generate(parsed, @id, @con, dirw)
   if parsed.language == 'ruby'
