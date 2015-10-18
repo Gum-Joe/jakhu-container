@@ -6,6 +6,7 @@ logger = require '../libs/logger.js'
 {runSync} = require '../libs/run.js'
 runc = require '../libs/run.js'
 generate = require '../libs/generator.js'
+version = require '../libs/versions.js'
 exports.script = (lang, parsed, options, dirw) ->
   # Main stuff
   @sharray = '#!/usr/bin/bash\necho Preparing to run web-app...\necho . /container/env.sh\n. /container/env.sh\n'
@@ -44,10 +45,13 @@ exports.script = (lang, parsed, options, dirw) ->
   @start = '.tubs/tub'+@id+'/start.sh'
   @enter = '\n'
   fs.appendFileSync @start, '#!/usr/bin/bash\n'
-  fs.appendFileSync @start, 'echo Starting Web-app...\ncd /container/app\n. ./env.sh\n'
+  fs.appendFileSync @start, 'echo Starting Web-app...\ncd /container\nsh ./versions.sh\n. ./env.sh\ncd app\n'
   if parsed.port != undefined
     fs.appendFileSync @start, 'export PORT='+parsed.port+@enter
   fs.appendFileSync @start, parsed.start
+
+  # Version file
+  version.generate(@id)
 
   if parsed.language == 'nodejs'
     generate.nodejs.generate(parsed, @id, @con, dirw)
