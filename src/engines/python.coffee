@@ -1,4 +1,5 @@
-# Nodejs generater
+# Python generator
+
 fs = require 'fs'
 mkdirp = require 'mkdirp'
 logger = require '../../libs/logger.js'
@@ -17,10 +18,10 @@ exports.generate = (parsed, idw, conw, dirw) ->
   @lang = parsed.language
   @id = idw
   # Update Nodejs/ruby/python
-  if parsed.nodejs == 'latest'
-    @array = 'echo Updating nodejs...\n. ~/.nvm/nvm.sh\necho nvm install stable\nnvm install stable\n'
+  if parsed.python == '2'
+    @array = 'echo Installing python 2.7...\necho apt-get install -y python\napt-get install -y python\n'
     fs.appendFileSync @con, @array
-  else if parsed.nodejs == undefined
+  else if parsed.python == undefined
     # body...
     @array = 'echo Installing nodejs...\n. ~/.nvm/nvm.sh\necho nvm install stable\nnvm install stable\n'
     fs.appendFileSync @con, @array
