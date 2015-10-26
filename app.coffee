@@ -21,7 +21,7 @@ info = tub+cli.greenBright('info ')
 run = tub+cli.magentaBright('runner ')
 errc = cli.cyanBright('tub ')+cli.redBright('ERR: ')
 
-start = (args, dir) ->
+exports.start = (args, dir) ->
   # Check instances
   checks.instances(dir, true)
   # .web.yml
@@ -73,5 +73,3 @@ exports.pullImages = (dir) ->
 exports.run = (image, args) ->
   # body...
   return runImage(image, args)
-
-start('rubyapp', 'instances')
