@@ -1,7 +1,7 @@
 #Pull images
 YAML = require 'yamljs'
 fs = require 'fs'
-parse = require './parse.coffee'
+parse = require './parse.js'
 {exec} = require 'child_process'
 {spawn} = require 'child_process'
 
