@@ -8,7 +8,7 @@ parse = require './libs/parse.js'
 {spawn} = require 'child_process'
 {exec} = require 'child_process'
 {script} = require './libs/gen.js'
-{run} = require './libs/run.js'
+run = require './libs/run.js'
 pull = require './libs/pull.js'
 YAML = require 'yamljs'
 cli = require 'cli-color'
@@ -72,4 +72,4 @@ exports.pullImages = (dir) ->
 
 exports.run = (image, args) ->
   # body...
-  return run(image, args)
+  return run.run(image, args)
