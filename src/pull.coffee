@@ -2,6 +2,7 @@
 YAML = require 'yamljs'
 fs = require 'fs'
 parse = require './parse.js'
+{exec} = require 'child_process'
 
 exports.pullImages = (file) ->
   # body...
