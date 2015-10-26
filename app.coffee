@@ -72,4 +72,4 @@ exports.pullImages = (dir) ->
 
 exports.run = (image, args) ->
   # body...
-  return runImage(image, args)
+  return run(image, args)
