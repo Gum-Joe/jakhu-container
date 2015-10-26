@@ -5,7 +5,7 @@ parse = require './parse.js'
 
 exports.pullImages = (file) ->
   # body...
-  @images = parse.parse('config/images.yml')
+  images = parse.parse(file)
   im = 0
   while im < images.images.length
     exec('docker pull '+images.images[im])
