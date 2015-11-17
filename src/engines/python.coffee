@@ -93,7 +93,6 @@ exports.generate = (parsed, idw, conw, dirw) ->
   fs.openSync @docker, 'w'
   fs.appendFileSync @docker, @from
   @dockerfile = 'COPY .tubs/tub'+@id+' /container\nCOPY '+dirw+' /container/app\nRUN cd /container; sh build.sh\nEXPOSE '+parsed.port+'\nCMD cd /container && sh ./start.sh'
-  fs.appendFileSync @docker, @dockerfile
-  runSend('sh', ['~/.web/tubs/build.sh', '.tubs/tub'+@id+'/Dockerfile', 'webos/tub'+@id, parsed.public+':'+parsed.port, 'webos/tub'+@id], @id, parsed)
-        # body...
+  fs.appendFileSync @docker, @dockerfile]
+  runSend('sh', ['~/.boss/tubs/build.sh', '.tubs/tub'+@id+'/Dockerfile', 'boss/tub'+@id, parsed.public+':'+parsed.port, 'boss/tub'+@id], @id, parsed)        # body...
   logger.logback(form: {id: @id, name: parsed.name, status: 'Running', code: '300', location: parsed.public}, 'http://localhost:8080/api/tubs/update/status', 'POST', 'node_modules/web-os-logger/')
