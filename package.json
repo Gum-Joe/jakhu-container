@@ -1,7 +1,7 @@
 {
-  "name": "boss-container",
+  "name": "jakhu-container",
   "version": "1.0.0",
-  "description": "A 'container' for running a Web-app that reports and logs infomation back to Boss and starts the Web-app on the local machine or docker",
+  "description": "A 'container' for running a Web-app that reports and logs infomation back to Jakhu and starts the Web-app on the local machine or docker",
   "main": "app.js",
   "scripts": {
     "preinstall": "cake install",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Gum-Joe/boss-container.git"
+    "url": "git+https://github.com/Gum-Joe/jakhu-container.git"
   },
   "keywords": [
     "web",
@@ -24,9 +24,9 @@
   "author": "Gum-Joe",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Gum-Joe/boss-container/issues"
+    "url": "https://github.com/Gum-Joe/jakhu-container/issues"
   },
-  "homepage": "https://github.com/Gum-Joe/boss-container#readme",
+  "homepage": "https://github.com/Gum-Joe/jakhu-container#readme",
   "dependencies": {
     "cli-color": "^1.1.0",
     "coffee-script": "^1.10.0",
@@ -36,7 +36,7 @@
     "request": "^2.65.0",
     "requests": "^0.1.7",
     "spawn-sync": "^1.0.13",
-    "boss-logger": "gum-joe/boss-logger",
+    "jakhu-logger": "gum-joe/jakhu-logger",
     "yamljs": "^0.2.4"
   },
   "devDependencies": {

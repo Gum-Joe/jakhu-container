@@ -10,6 +10,6 @@ exports.logback = (data, route, type, dir) ->
     request.post route, data, (error, response, body) ->
       # Uncomment - soon
       #if error
-        #assert.fail error, null, 'ERR: Could not report back to Web-OS server'
+        #assert.fail error, null, 'ERR: Could not report back to jakhu server'
       #if response.statusCode != 200 and response.statusCode != 304
-        #assert.fail error, null, 'ERR: Could not report back to Web-OS server. Is the server running?'
+        #assert.fail error, null, 'ERR: Could not report back to jakhu server. Is the server running?'
