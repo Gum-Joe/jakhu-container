@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Create a container for a web-app in jakhu",
   "main": "app.js",
-  "bin": {
-    "boss-container": "cli.js"
-  },
   "directories": {
     "example": "examples",
     "test": "test"
