@@ -1,10 +1,18 @@
-ci:
-	cake install; \
-	cake test; \
-	mkdir -p instances/test; \
-	echo "Prepareing to test..."; \
-	echo 'name: test' >> instances/test/.web.yml; \
-	echo "Testing..."; \
-	mocha
-	istanbul cover _mocha test/**/*.js --reporter=lcovonly -- -R spec && cat coverage/lcov.info | node_modules/.bin/coveralls
-	echo Done!;
+# Make file for compile
+SRCDIR := src
+COFFEEC ?= coffee
+OUT ?= libs
+SRCS := $(shell  find ./src -name "*.coffee")
+JS := $(patsubst %.coffee, %.js, $(patsubst ./src, $(OUT), $(SRCS)))
+JSR := $(subst ./src, $(OUT), $(JS))
+
+all: $(JSR)
+	@make $(JSR);
+
+watch:
+	@mkdir -p libs
+	$(COFFEEC) --watch -o $(OUT) -c $(SRCDIR)
+
+libs/%.js: src/%.coffee
+	@echo "  COFFEEC(compile) "$@
+	@$(COFFEEC) -o $@ -c $<

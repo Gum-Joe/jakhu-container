@@ -1,45 +1,49 @@
 {
   "name": "jakhu-container",
   "version": "1.0.0",
-  "description": "A 'container' for running a Web-app that reports and logs infomation back to Jakhu and starts the Web-app on the local machine or docker",
+  "description": "Create a container for a web-app in jakhu",
   "main": "app.js",
+  "bin": {
+    "boss-container": "cli.js"
+  },
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
+  "dependencies": {
+    "cli-color": "^1.1.0",
+    "coveralls": "^2.11.4",
+    "deasync": "^0.1.3",
+    "debug": "^2.2.0",
+    "mkdirp": "^0.5.1",
+    "python-shell": "^0.2.0",
+    "request": "^2.65.0",
+    "requests": "^0.1.7",
+    "spawn-sync": "^1.0.13",
+    "yamljs": "^0.2.4",
+    "coffee-script": "^1.10.0"
+  },
+  "devDependencies": {
+    "coffee-script": "^1.10.0"
+  },
   "scripts": {
-    "preinstall": "cake install",
-    "install": "sh install.sh"
+    "test": "mocha",
+    "install": "node_modules/.bin/cake install"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Gum-Joe/jakhu-container.git"
   },
   "keywords": [
+    "jakhu",
     "web",
-    "os",
-    "contaier",
-    "cplus",
-    "nodejs"
+    "container",
+    "docker"
   ],
-  "bin": {
-    "tub": "bin/cli.js"
-  },
   "author": "Gum-Joe",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Gum-Joe/jakhu-container/issues"
   },
-  "homepage": "https://github.com/Gum-Joe/jakhu-container#readme",
-  "dependencies": {
-    "cli-color": "^1.1.0",
-    "coffee-script": "^1.10.0",
-    "deasync": "^0.1.3",
-    "mkdirp": "^0.5.1",
-    "python-shell": "^0.2.0",
-    "request": "^2.65.0",
-    "requests": "^0.1.7",
-    "spawn-sync": "^1.0.13",
-    "jakhu-logger": "gum-joe/jakhu-logger",
-    "yamljs": "^0.2.4"
-  },
-  "devDependencies": {
-    "coveralls": "^2.11.4"
-  }
+  "homepage": "https://github.com/Gum-Joe/jakhu-container#readme"
 }

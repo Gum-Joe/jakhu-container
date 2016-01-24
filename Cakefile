@@ -17,13 +17,6 @@ install = (callback) ->
       # body...
       console.log "Error!\n"+stderr
   )
-  exec.exec('coffee -o ./bin -c src/bin', (stdout, stderr, error) ->
-    if stdout != null
-      console.log stdout
-    else if stderr
-      # body...
-      console.log "Error!\n"+stderr
-  )
 
 test = (callback) ->
   exec.exec('coffee -o test -c src/test', (stdout, stderr, error) ->
