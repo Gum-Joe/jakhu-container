@@ -12,7 +12,7 @@ class App
   constructor: (author, app) ->
     # body...
     @author = author
-    @app = `#{author}/#{app}`
+    @app = "#{author}/#{app}"
     @tubs = []
     @dir = "#{instances}/#{@app}"
     @ymlfile = "#{@dir}/.jakhu.yml"
