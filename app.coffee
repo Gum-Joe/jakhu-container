@@ -12,7 +12,7 @@ class App
   constructor: (author, app) ->
     # body...
     @author = author
-    @app = app
+    @app = "#{author}/#{app}"
     @tubs = []
     @dir = "#{instances}/#{@app}"
     @ymlfile = "#{@dir}/.jakhu.yml"
@@ -41,11 +41,11 @@ class App
     genDockerFile()
       # body...
 
-a = new App("meap", "nodejs")
-a.addTub('default')
-a.autoTubs()
-a.createDockerFiles()
-a.final()
+# a = new App("../../../instances/sample", "sample")
+# a.addTub('default')
+# a.autoTubs()
+# a.createDockerFiles()
+# a.final()
 
 
 module.exports = { App: App }

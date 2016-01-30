@@ -1,17 +1,57 @@
 {
-  "name": "jakhu-container",
-  "version": "1.0.0",
-  "description": "Create a container for a web-app in jakhu",
-  "main": "app.js",
-  "bin": {
-    "boss-container": "cli.js"
+  "_args": [
+    [
+      "Gum-Joe/jakhu-container",
+      "C:\\Users\\Kishan Sambhi\\Documents\\Projects\\boss\\boss"
+    ]
+  ],
+  "_from": "gum-joe/jakhu-container",
+  "_id": "jakhu-container@1.0.0",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/jakhu-container",
+  "_phantomChildren": {
+    "ansi-regex": "2.0.0",
+    "d": "0.1.1",
+    "es5-ext": "0.10.11",
+    "es6-iterator": "2.0.0",
+    "memoizee": "0.3.9",
+    "timers-ext": "0.1.0"
   },
-  "directories": {
-    "example": "examples",
-    "test": "test"
+  "_requested": {
+    "hosted": {
+      "directUrl": "https://raw.githubusercontent.com/gum-joe/jakhu-container/master/package.json",
+      "gitUrl": "git://github.com/gum-joe/jakhu-container.git",
+      "httpsUrl": "git+https://github.com/gum-joe/jakhu-container.git",
+      "shortcut": "github:gum-joe/jakhu-container",
+      "ssh": "git@github.com:gum-joe/jakhu-container.git",
+      "sshUrl": "git+ssh://git@github.com/gum-joe/jakhu-container.git",
+      "type": "github"
+    },
+    "name": null,
+    "raw": "Gum-Joe/jakhu-container",
+    "rawSpec": "Gum-Joe/jakhu-container",
+    "scope": null,
+    "spec": "github:gum-joe/jakhu-container",
+    "type": "hosted"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "git://github.com/gum-joe/jakhu-container.git#18f5957d4da7a8f19855580bf15a24da8b9f30f9",
+  "_shasum": "e078c66667ad72f7c47f89e395dfe1dbcafe38b8",
+  "_shrinkwrap": null,
+  "_spec": "Gum-Joe/jakhu-container",
+  "_where": "C:\\Users\\Kishan Sambhi\\Documents\\Projects\\boss\\boss",
+  "author": {
+    "name": "Gum-Joe"
+  },
+  "bugs": {
+    "url": "https://github.com/Gum-Joe/jakhu-container/issues"
   },
   "dependencies": {
     "cli-color": "^1.1.0",
+    "coffee-script": "^1.10.0",
     "coveralls": "^2.11.4",
     "deasync": "^0.1.3",
     "debug": "^2.2.0",
@@ -20,30 +60,37 @@
     "request": "^2.65.0",
     "requests": "^0.1.7",
     "spawn-sync": "^1.0.13",
-    "yamljs": "^0.2.4",
-    "coffee-script": "^1.10.0"
+    "yamljs": "^0.2.4"
   },
+  "description": "Create a container for a web-app in jakhu",
   "devDependencies": {
     "coffee-script": "^1.10.0"
   },
-  "scripts": {
-    "test": "mocha",
-    "install": "node_modules/.bin/cake install"
+  "directories": {
+    "example": "examples",
+    "test": "test"
   },
+  "gitHead": "18f5957d4da7a8f19855580bf15a24da8b9f30f9",
+  "homepage": "https://github.com/Gum-Joe/jakhu-container#readme",
+  "keywords": [
+    "container",
+    "docker",
+    "jakhu",
+    "web"
+  ],
+  "license": "MIT",
+  "main": "app.js",
+  "name": "jakhu-container",
+  "optionalDependencies": {},
+  "readme": "# Jakhu-tubs [![Build Status](https://travis-ci.org/Gum-Joe/jakhu-container.svg)](https://travis-ci.org/Gum-Joe/jakhu-container) [![Coverage Status](https://coveralls.io/repos/Gum-Joe/jakhu-container/badge.svg?branch=master&service=github)](https://coveralls.io/github/Gum-Joe/jakhu-container?branch=master) [![Code Climate](https://codeclimate.com/github/Gum-Joe/jakhu-container/badges/gpa.svg)](https://codeclimate.com/github/Gum-Joe/jakhu-container)\r\nDocker has containers.\r\nVagrant has boxes.\r\nWe have tubs.\r\n\r\nA 'tub' for running Web-app that reports and logs infomation back to jakhu and starts the Web-app on the local machine or a docker container\r\n\r\n**NOTICE**: We were originally planning to call this 'container', but we thought it was copying docker.\r\n",
+  "readmeFilename": "README.md",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Gum-Joe/jakhu-container.git"
   },
-  "keywords": [
-    "jakhu",
-    "web",
-    "container",
-    "docker"
-  ],
-  "author": "Gum-Joe",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Gum-Joe/jakhu-container/issues"
+  "scripts": {
+    "install": "cake install",
+    "test": "mocha"
   },
-  "homepage": "https://github.com/Gum-Joe/jakhu-container#readme"
+  "version": "1.0.0"
 }

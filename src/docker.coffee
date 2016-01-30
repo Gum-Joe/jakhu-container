@@ -30,7 +30,7 @@ class DockerFileDefault
   image: (lang) ->
     fs.appendFileSync @file, "FROM jakhu/#{lang}:latest\nRUN sudo chown -R jakhu /runner\n"
   cwd: () ->
-    fs.appendFileSync @file, "CMD /runner/bin/jakhurun start"
+    fs.appendFileSync @file, "CMD sudo chown -R jakhu /runner && /runner/bin/jakhurun start"
 
 
 
@@ -57,6 +57,8 @@ genDockerFile = (tub, appdir, yml) ->
   while f < yml.services.length
     @compose[yml.services[f]] = image: yml.services[f], container_name: "#{yml.name}-service-#{yml.services[f]}"
     f++
+  # Create dir
+  mkdirp("#{appdir}/.jakhu")
   # append
   fs.open("#{appdir}/.jakhu/docker-compose.yml", 'w', (err) ->
     # body...
