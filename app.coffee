@@ -41,11 +41,11 @@ class App
     genDockerFile()
       # body...
 
-a = new App("meap", "nodejs")
-a.addTub('default')
-a.autoTubs()
-a.createDockerFiles()
-a.final()
+# a = new App("meap", "nodejs")
+# a.addTub('default')
+# a.autoTubs()
+# a.createDockerFiles()
+# a.final()
 
 
 module.exports = { App: App }
