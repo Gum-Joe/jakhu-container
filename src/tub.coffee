@@ -6,7 +6,7 @@ class TubConfig
     # body...
     @dir = appdir
     @tub = tub
-    @file = "#{@dir}/.jakhu/#{@tub}tub_config.yml"
+    @file = "#{@dir}/.jakhu/#{@tub}/tub_config.yml"
     @yml = yml
     @yaml = {}
     fs.openSync @file, 'w+'
