@@ -30,7 +30,7 @@ class DockerFileDefault
   image: (lang) ->
     fs.appendFileSync @file, "FROM jakhu/#{lang}:latest\nRUN sudo chown -R jakhu /runner\n"
   cwd: () ->
-    fs.appendFileSync @file, "CMD sudo chown -R jakhu /runner && /runner/bin/jakhurun start"
+    fs.appendFileSync @file, 'CMD bash -c "sudo chmod 777 /runner/bin/jakhurun && source /home/jakhu/.rvm/scripts/rvm && rvm use ruby-head && ~/.jakhu/bin/jakhurun --version"'
 
 
 
