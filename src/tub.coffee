@@ -22,7 +22,7 @@ class TubConfig
 
 genTubConfig = (tub, appdir, yml) ->
   # body...
-  tc = new DockerFileDefault(tub, appdir, yml)
+  tc = new TubConfig(tub, appdir, yml)
   tc.create()
   tc.write()
 
