@@ -18,7 +18,7 @@ class TubConfig
     @yaml.app = @yml.name
   write: (args) ->
     # body...
-    @sy = YAML.stringify(@yaml)
+    @sy = YAML.stringify(@yaml, 4)
     fs.appendFileSync @file, @sy
 
 genTubConfig = (tub, appdir, yml) ->
