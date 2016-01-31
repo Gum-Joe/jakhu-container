@@ -29,8 +29,9 @@ class DockerFileDefault
     createDockerFile("#{appdir}/.jakhu/#{tub}")
   image: (lang) ->
     fs.appendFileSync @file, "FROM jakhu/#{lang}:latest\nRUN sudo chown -R jakhu /runner\nCOPY tub_config.yml ~/.jakhu/tub_config.yml\nCOPY ../.. /app"
+    fs.appendFileSync @file, "RUN mkdir ~/.jakhu\nADD tub_config.yml /home/jakhu/.jakhu/tub_config.yml\nRUN sudo git clone https://github.com/Gum-Joe/jakhu-runner ~/.jakhu/runner\nVOLUME ../.. /app\n"
   cwd: () ->
-    fs.appendFileSync @file, 'CMD bash -c "sudo chmod 777 /runner/bin/jakhurun && source /home/jakhu/.rvm/scripts/rvm && rvm use ruby-head && /runner/bin/jakhurun start"'
+    fs.appendFileSync @file, 'CMD bash -c "sudo chmod 777 ~/.jakhu/runner && source /home/jakhu/.rvm/scripts/rvm && rvm use ruby-head && ruby ~/.jakhu/runner/bin/jakhurun start"'
 
 
 
