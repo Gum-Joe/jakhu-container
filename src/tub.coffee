@@ -9,7 +9,7 @@ class TubConfig
     @file = "#{@dir}/.jakhu/#{@tub}tub_config.yml"
     @yml = yml
     @yaml = {}
-    fs.openSync @file
+    fs.openSync @file, 'w+'
   create: (args) ->
     # body...
     @yaml.name = @tub
