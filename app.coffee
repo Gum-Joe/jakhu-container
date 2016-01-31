@@ -7,6 +7,7 @@
 YAML = require 'yamljs'
 instances = "instances"
 {genDockerFile} = require './libs/docker.js'
+{genTubConfig} = require './libs/tub.js'
 debug = require('debug')('container:starter')
 class App
   constructor: (author, app) ->
@@ -26,6 +27,8 @@ class App
     while i < @parsedYml.tubs.length
       # Create files
       genDockerFile(@parsedYml.tubs[i], @dir, @parsedYml)
+      # Create tubs
+      genTubConfig(@parsedYml.tubs[i], @dir, @parsedYml)
       i++
 
   final: () ->

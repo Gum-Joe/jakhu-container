@@ -28,7 +28,7 @@ class DockerFileDefault
     @compose = {}
     createDockerFile("#{appdir}/.jakhu/#{tub}")
   image: (lang) ->
-    fs.appendFileSync @file, "FROM jakhu/#{lang}:latest\nRUN sudo chown -R jakhu /runner\n"
+    fs.appendFileSync @file, "FROM jakhu/#{lang}:latest\nRUN sudo chown -R jakhu /runner\nCOPY tub_config.yml ~/.jakhu/tub_config.yml\nCOPY ../.. /app"
   cwd: () ->
     fs.appendFileSync @file, "CMD sudo chown -R jakhu /runner && /runner/bin/jakhurun start"
 
