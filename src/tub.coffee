@@ -1,5 +1,6 @@
 # Tub class
 YAML = require 'yamljs'
+fs = require 'fs'
 class TubConfig
   constructor: (tub, appdir, yml) ->
     # body...
